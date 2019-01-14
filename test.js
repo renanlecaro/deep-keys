@@ -27,9 +27,8 @@ describe('deep-keys', function() {
       c: { d: { e: 1 }, f: 1 },
       d: { e: { f: { g: 1, h: 2 } } },
       e: 2,
-      f: { g: [] }
     };
-    expectEqual(keys(obj1), ['a', 'b.c', 'c.d.e', 'c.f', 'd.e.f.g', 'd.e.f.h', 'e', 'f.g']);
+    expectEqual(keys(obj1), ['a', 'b.c', 'c.d.e', 'c.f', 'd.e.f.g', 'd.e.f.h', 'e']);
 
     var obj2 = {
       type: 'customer',
@@ -72,6 +71,19 @@ describe('deep-keys', function() {
     expectEqual(keys(obj3), ['a.b\\.d.c']);
     var obj4 = { a: { 'b.d': { c: 1 } } };
     expectEqual(keys(obj4, true), ['a','a.b\\.d', 'a.b\\.d.c']);
+  });
+
+  it('should consider an empty array as an empty object', function() {
+    var obj1 =  {a:[]}
+    expectEqual(keys(obj1), []);
+    expectEqual(keys(obj1, true), ['a']);
+  });
+
+  it('should also list keys coming from arrays', function() {
+    var obj1 =  [{a:1}]
+    expectEqual(keys(obj1), ['0.a']);
+    var obj2 = { a: [ {b:1}, {c:2}]};
+    expectEqual(keys(obj2), ['a.0.b', 'a.1.c']);
   });
 
 });

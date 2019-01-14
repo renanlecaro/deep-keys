@@ -22,8 +22,8 @@ function deepKeys(obj, stack, parent, intermediate) {
   Object.keys(obj).forEach(function(el) {
     // Escape . in the element name
     var escaped = el.replace(/\./g, '\\\.');
-    // If it's a nested object
-    if(isObject(obj[el]) && !isArray(obj[el])) {
+    // If it's a nested object (or array)
+    if(isObject(obj[el])){
       // Concatenate the new parent if exist
       var p = parent ? parent + '.' + escaped : parent;
       // Push intermediate parent key if flag is true
